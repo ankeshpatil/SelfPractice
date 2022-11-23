@@ -3,6 +3,7 @@ package com.ankeshcode.blog.payloads;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+//DTO:Data Transfer Object :it's one of the design pattern
 
 @NoArgsConstructor
 @Getter

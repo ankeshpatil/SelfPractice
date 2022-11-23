@@ -1,6 +1,7 @@
 package com.ankeshcode.blog.serviceImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ankeshcode.blog.entities.User;
 import com.ankeshcode.blog.exception.ResourceNotFoundException;
@@ -17,43 +18,50 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		User user=this.dtoToUser(userDto);
-		User saveduser=this.userRepo.save(user);
-		
+		User user = this.dtoToUser(userDto);
+		User saveduser = this.userRepo.save(user);
+
 		return this.userToDto(saveduser);
 	}
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
-		User user=this.userRepo.findById(userId).orElseThrow(()->new ResourceNotFoundException("User"," Id ",userId));
-		
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
+
 		user.setId(userDto.getId());
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
 		user.setPassword(userDto.getPassword());
 		user.setAbout(userDto.getPassword());
-		
-		User userupdated=this.userRepo.save(user);
-		
+
+		User userupdated = this.userRepo.save(user);
+
 		return this.userToDto(userupdated);
 	}
 
 	@Override
 	public UserDto getUserById(Integer userId) {
 		// TODO Auto-generated method stub
-		return null;
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
+		return this.userToDto(user);
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		List<User> users = this.userRepo.findAll();
+		List<UserDto> userDto = users.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
+		return userDto;
 	}
 
 	@Override
 	public void deleteUser(Integer userId) {
 		// TODO Auto-generated method stub
-
+		User user = this.userRepo.findById(userId)
+				.orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
+		this.userRepo.delete(user);
 	}
 
 	private User dtoToUser(UserDto userDto) {
@@ -77,4 +85,5 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 
 	}
+
 }
