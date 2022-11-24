@@ -8,15 +8,16 @@ public class InterviewCode {
 		int arm = 9475;
 		int palin = 2112;
 
-		armstrong(arm);
-		palindrome(palin);
-		reverse(rev);
-
 		for (int i = 0; i <= limit; i++) {
 			prime(i);
 		}
 
+		armstrong(arm);
+		palindrome(palin);
+		reverse(rev);
 		fibonacci(limit);
+		
+		
 
 	}
 
