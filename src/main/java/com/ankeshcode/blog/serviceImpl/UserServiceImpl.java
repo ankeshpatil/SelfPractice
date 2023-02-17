@@ -1,16 +1,16 @@
 package com.ankeshcode.blog.serviceImpl;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.ankeshcode.blog.entities.User;
 import com.ankeshcode.blog.exception.ResourceNotFoundException;
 import com.ankeshcode.blog.payloads.UserDto;
 import com.ankeshcode.blog.repositories.UserRepo;
 import com.ankeshcode.blog.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 		user.setAbout(userDto.getPassword());
 
 		User userupdated = this.userRepo.save(user);
-
+ 
 		return this.userToDto(userupdated);
 	}
 
@@ -63,6 +63,10 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
 		this.userRepo.delete(user);
 	}
+	
+	
+	
+	
 
 	private User dtoToUser(UserDto userDto) {
 
@@ -79,7 +83,7 @@ public class UserServiceImpl implements UserService {
 		UserDto userDto = new UserDto();
 		userDto.setId(user.getId());
 		userDto.setName(user.getName());
-		userDto.setEmail(user.getName());
+		userDto.setEmail(user.getEmail());
 		userDto.setPassword(user.getPassword());
 		userDto.setAbout(user.getAbout());
 		return userDto;
